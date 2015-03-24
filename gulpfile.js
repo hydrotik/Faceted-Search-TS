@@ -130,7 +130,8 @@ gulp.task('ts-compile', function () {
                        .pipe(ts({
                            declarationFiles: true,
                            noExternalResolve: false,
-                           sortOutput: true
+                           sortOutput: true,
+                           target : 'ES5'
                        }));
     /*
     return tsResult.js.pipe(merge([
