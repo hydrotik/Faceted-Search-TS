@@ -1,4 +1,5 @@
-
+///<reference path="../def/jquery.d.ts" />
+///<reference path="../def/lodash.d.ts" />
 
 module app {
 
