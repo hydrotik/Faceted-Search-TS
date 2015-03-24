@@ -8,6 +8,7 @@
     "jquery": "~2.1.3",
     "lodash": "~3.5.0",
     "modernizr": "~2.8.3",
-    "facetjs" : "https://github.com/eikes/facetedsearch.git"
+    "facetjs": "https://github.com/eikes/facetedsearch.git",
+    "bootstrap": "~3.3.4"
   }
 }

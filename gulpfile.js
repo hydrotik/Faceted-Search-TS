@@ -35,12 +35,6 @@ var destinations = {
   index: outputFolder
 };
 
-// When adding a 3rd party we want to insert in the html, add it to
-// vendoredLibs, order matters
-var vendoredLibs = config.vendoredLibs;
-
-
-
 var banner = [
   '/*!\n' +
   ' * <%= package.name %>\n' +
@@ -52,41 +46,6 @@ var banner = [
   ' */',
   '\n'
 ].join('');
-
-
-// Will be filled automatically
-var vendoredLibsMin = [];
-
-var injectLibsPaths = {
-  dev: [],
-  dist: []
-};
-
-var injectPaths = {
-  dev: [],
-  dist: []
-};
-
-vendoredLibs.forEach(function(lib) {
-  // take the filename
-  var splittedPath = lib.split('/');
-  var filename = splittedPath[splittedPath.length -1];
-  injectLibsPaths.dev.push(destinations.libs + '/' + filename);
-  // And get the minified version
-  filename = filename.split('.')[0] + '.min.js';
-  splittedPath[splittedPath.length - 1] = filename;
-  vendoredLibsMin.push(splittedPath.join('/'));
-  injectLibsPaths.dist.push(destinations.libs + '/' + filename);
-});
-
-['dev', 'dist'].forEach(function (env) {
-  injectPaths[env] = injectLibsPaths[env].concat([
-    destinations.js + "/app/**/module.js",
-    isDist ? destinations.js + '/app.js' : destinations.js + "/app/**/*.js",
-    destinations.js + "/templates.js",
-    destinations.css + "/*.css"
-  ]);
-});
 
 
 // TASKS ===========================================================
@@ -164,11 +123,6 @@ gulp.task('browser-sync', function () {
   });
 });
 
-gulp.task('copy-vendor', function () {
-  return gulp.src(isDist ? vendoredLibsMin : vendoredLibs)
-    .pipe(gulp.dest(destinations.libs));
-});
-
 gulp.task('copy-assets', function () {
   return gulp.src(globs.assets)
     .pipe(gulp.dest(destinations.assets));
@@ -187,7 +141,10 @@ gulp.task('index', function () {
 */
 
 
-    return target.pipe(template({footerjs : config.vendor}))
+    return target.pipe(template({
+          footerjs : config.vendorjs,
+          headercss : config.vendorcss
+        }))
         .pipe(gulp.dest(destinations.index));
 });
 
@@ -202,7 +159,7 @@ gulp.task(
   'build',
   runSequence(
     'clean',
-    ['sass', 'copy-assets', 'ts-compile', 'copy-vendor'],
+    ['sass', 'copy-assets', 'ts-compile'],
     'index'
   )
 );

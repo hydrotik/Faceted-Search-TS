@@ -10,30 +10,30 @@
 
     <link href="//www.google-analytics.com" rel="dns-prefetch">
     <link href="//ajax.googleapis.com" rel="dns-prefetch">
+
+    <% _.forEach(headercss, function(item) {%><link href="<%- item.src %>" rel="stylesheet">
+    <%}); %>
+
     <link href="style/style.min.css" rel="stylesheet">
 
     <% _.forEach(footerjs, function(item) { if(!item.footer){%><script src="<%- item.src %>"></script>
     <%}; }); %>
+
   </head>
   <body>
 
     <header class="header" role="banner">
-      <div class="logo">
-        <a href="/">
-          <img src="assets/img/logo.png" alt="Logo">
-        </a>
-      </div>
       <nav class="nav" role="navigation">
         <ul>
           <li>
-            <a href="/"></a>
+            <a href="/">Navigation Link</a>
           </li>
         </ul>
       </nav>
     </header>
 
     <main class="main" role="main">
-
+    Content here
     </main>
 
     <aside class="sidebar" role="complementary">

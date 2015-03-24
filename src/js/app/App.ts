@@ -1,17 +1,15 @@
-///<reference path="TestModule.ts"/>
-///<reference path="../com/hydrotik/geom/Point.ts"/>
+///<reference path="Model.ts"/>
 
 
 module app {
 
-    import TestModule = app.TestModule;
-    import Point = com.hydrotik.geom.Point;
+    import Model = app.Model;
 
     export class App {
 
         private view: HTMLElement;
 
-
+        private model:Array<Object>;
         /**
         *   Application Facade
         *   
@@ -19,6 +17,8 @@ module app {
         */
         constructor(view: HTMLElement) {
             this.view = view;
+
+            this.model = new Model().getItems();
 
             this.log('Initializing Application from ' + this.view);
         }
@@ -30,13 +30,7 @@ module app {
         initializeApplication(message:string): void {
             this.log(message);
 
-            var tm:TestModule = new TestModule('my URL');
-
-            var pt:Point = new Point(25, 75);
-
-            console.log(pt.toString());
-
-
+            console.log(this.model);
         }
     }
 }

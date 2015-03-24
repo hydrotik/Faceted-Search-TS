@@ -17,15 +17,16 @@
     "libs": "/vendor",
     "assets": "/assets"
   },
-  "vendoredLibs" : [
-    "assets/lib/modernizr/modernizr.js",
-    "assets/lib/jquery/dist/jquery.min.js",
-    "assets/lib/lodash/lodash.min.js"
+
+  "vendorjs" : [
+    {"src" : "assets/lib/modernizr/modernizr.js",             "footer" : false},
+    {"src" : "assets/lib/jquery/dist/jquery.min.js",          "footer" : true},
+    {"src" : "assets/lib/lodash/lodash.min.js",               "footer" : true},
+    {"src" : "assets/lib/facetjs/facetedsearch.js",           "footer" : true},
+    {"src" : "assets/lib/bootstrap/dist/js/bootstrap.js",     "footer" : true}
   ],
-  "vendor" : [
-    {"src" : "assets/lib/modernizr/modernizr.js",       "footer" : false},
-    {"src" : "assets/lib/jquery/dist/jquery.min.js",    "footer" : true},
-    {"src" : "assets/lib/lodash/lodash.min.js",         "footer" : true},
-    {"src" : "assets/lib/facetjs/facetedsearch.js",     "footer" : true}
+  "vendorcss" : [
+    {"src" : "assets/lib/bootstrap/dist/css/bootstrap.css"},
+    {"src" : "assets/lib/bootstrap/dist/css/bootstrap-theme.css"}
   ]
 }
