@@ -1,3 +1,3 @@
-# Elastic Lists JS
+# Faceted Search TS
 
-Attempt to port Moritz Stefaner Elastic Lists to Typescript https://github.com/MoritzStefaner/Elastic-Lists
+Faceted Search and Quiz implementation using Typescript
