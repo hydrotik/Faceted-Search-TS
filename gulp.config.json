@@ -1,0 +1,30 @@
+{
+  "global" : {
+    "dist" : "dist",
+    "build" : "build"
+  },
+  "globs" : {
+    "sass": ["src/scss/**/*.scss"],
+    "tsc": ["src/js/app/**/*.ts", "src/js/com/hydrotik/**/*.ts", "src/js/eu/stefaner/elasticlists/data/Model.ts"],
+    "templates": ["src/templates/**/*.html"],
+    "assets": ["src/assets/**/*.*"],
+    "integration": ["src/tests/integration/**/*.js"],
+    "index": ["src/index.html"]
+  },
+  "destinations" : {
+    "css": "/style",
+    "js": "/js",
+    "libs": "/vendor",
+    "assets": "/assets"
+  },
+  "vendoredLibs" : [
+    "assets/lib/modernizr/modernizr.js",
+    "assets/lib/jquery/dist/jquery.min.js",
+    "assets/lib/lodash/lodash.min.js"
+  ],
+  "vendor" : [
+    {"src" : "assets/lib/modernizr/modernizr.js",       "footer" : false},
+    {"src" : "assets/lib/jquery/dist/jquery.min.js",    "footer" : true},
+    {"src" : "assets/lib/lodash/lodash.min.js",         "footer" : true}
+  ]
+}
