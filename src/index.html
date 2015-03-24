@@ -20,25 +20,36 @@
     <%}; }); %>
 
   </head>
-  <body>
+  <body role="document">
 
-    <header class="header" role="banner">
-      <nav class="nav" role="navigation">
-        <ul>
-          <li>
-            <a href="/">Navigation Link</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Faceted Search in Typescript</a>
+        </div>
+      </div>
+    </nav>
 
-    <main class="main" role="main">
-    Content here
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+      
+
+    <main class="main container theme-showcase" role="main">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Demo</h2>
+          <div id="facets"></div>
+          <div id="results"></div>
+        </div>
+      </div>
     </main>
 
-    <aside class="sidebar" role="complementary">
-
-    </aside>
 
     <footer class="footer" role="contentinfo">
 

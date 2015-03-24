@@ -5,7 +5,7 @@
   },
   "globs" : {
     "sass": ["src/scss/**/*.scss"],
-    "tsc": ["src/js/app/**/*.ts", "src/js/com/hydrotik/**/*.ts", "src/js/eu/stefaner/elasticlists/data/Model.ts"],
+    "tsc": ["src/js/app/**/*.ts", "src/js/com/hydrotik/**/*.ts", "src/js/def/**/*.ts"],
     "templates": ["src/templates/**/*.html"],
     "assets": ["src/assets/**/*.*"],
     "integration": ["src/tests/integration/**/*.js"],
