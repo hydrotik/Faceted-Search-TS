@@ -8,6 +8,8 @@ module app {
 
         private defaults:Object;
 
+        private moreButton:Object;
+
         /**
         *   Application Facade
         *   
@@ -50,8 +52,50 @@ module app {
             console.log(message);
         }
 
-        init(message:string): void {
-            this.log(message);
+        facetUpdate():void{
+
         }
+
+        private initFacetCount(): void {
+            //
+        }
+
+        private resetFacetCount(): void {
+            //
+        }
+
+        private filter(): void {
+            //
+        }
+
+        private order(): void {
+            //
+        }
+
+        private toggleFilter(): void {
+            //
+        }
+
+        private createFacetUI(): void {
+            //
+        }
+
+        private getFilterById(): void {
+            //
+        }
+
+        private updateFacetUI(): void {
+            //
+        }
+
+        private updateResults(): void {
+            //
+        }
+
+        private showMoreResults(): void {
+            //
+        }
+
+
     }
 }
