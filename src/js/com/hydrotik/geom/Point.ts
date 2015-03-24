@@ -18,7 +18,7 @@ module com.hydrotik.geom {
 		}
 
 		public toString():string{
-			return "Point x:" + this.x + ", y:" + this.y;
+			return 'Point x:' + this.x + ', y:' + this.y;
 		}
 	}
 }

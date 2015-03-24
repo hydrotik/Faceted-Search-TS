@@ -16,18 +16,21 @@ module com.hydrotik.events {
 
 
 		public addEventListener(type:string, listener:Function){
-			if (this.listeners[ type ] === undefined)
+			if (this.listeners[ type ] === undefined){
 				this.listeners[ type ] = new Array<Function>();
+			}
 
-			if (this.getEventListenerIndex(type, listener) === -1)
+			if (this.getEventListenerIndex(type, listener) === -1){
 				this.listeners[ type ].push(listener);
+			}
 		}
 
 		public removeEventListener(type:string, listener:Function){
 			var index:number = this.getEventListenerIndex(type, listener);
 
-			if (index !== -1)
+			if (index !== -1){
 				this.listeners[ type ].splice(index, 1);
+			}
 		}
 
 		public dispatchEvent(event:Event){
@@ -38,8 +41,9 @@ module com.hydrotik.events {
 
 				event.target = this.target;
 
-				for (var i:number = 0; i < l; i++)
+				for (var i:number = 0; i < l; i++){
 					listenerArray[i](event);
+				}
 			}
 		}
 
@@ -48,9 +52,11 @@ module com.hydrotik.events {
 				var a:Array<Function> = this.listeners[ type ];
 				var l:number = a.length;
 
-				for (var i:number = 0; i < l; i++)
-					if (listener == a[i])
+				for (var i:number = 0; i < l; i++){
+					if (listener === a[i]){
 						return i;
+					}
+				}
 			}
 
 			return -1;
@@ -60,8 +66,9 @@ module com.hydrotik.events {
 			if (listener != null) {
 				return ( this.getEventListenerIndex(type, listener) !== -1 );
 			} else {
-				if (this.listeners[ type ] !== undefined)
+				if (this.listeners[ type ] !== undefined){
 					return ( this.listeners[ type ].length > 0 );
+				}
 
 				return false;
 			}

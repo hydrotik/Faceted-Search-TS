@@ -11,8 +11,6 @@ module app {
 
         private view: HTMLElement;
 
-        public model : Model;
-
 
         /**
         *   Application Facade
