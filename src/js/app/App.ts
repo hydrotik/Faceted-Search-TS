@@ -1,9 +1,11 @@
 ///<reference path="Model.ts"/>
+///<reference path="FacetedSearch.ts"/>
 ///<reference path="../def/jquery.d.ts" />
 
 module app {
 
     import Model = app.Model;
+    import FacetedSearch = app.FacetedSearch;
 
     export class App {
 
@@ -43,6 +45,8 @@ module app {
                  '</p>' +
                  '<p class="desc"><%= obj.description %></p>' +
                '</div>';
+
+
             var settings = { 
               items            : this.model,
               facets           : { 
@@ -59,7 +63,9 @@ module app {
             }   
 
             // use them!
-            $.facetelize(settings);
+            //$.facetelize(settings);
+
+            var fs:FacetedSearch = new FacetedSearch(settings);
 
         }
     }

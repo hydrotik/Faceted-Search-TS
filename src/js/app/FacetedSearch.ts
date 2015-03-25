@@ -5,7 +5,7 @@ module app {
 
     export class FacetedSearch {
 
-        private settings: Object;
+        private settings:Object;
 
         private defaults:Object;
 
@@ -16,8 +16,7 @@ module app {
         *   
         *   @param {Object} search settings
         */
-        constructor(settings: Object) {
-            this.settings = settings;
+        constructor(usersettings: Object) {
 
             this.log('Initializing FacetedSearch');
 
@@ -47,6 +46,25 @@ module app {
               enablePagination   : true,
               paginationCount    : 20
             }
+
+            $.extend(this.settings, this.defaults, usersettings);
+
+
+            this.settings = {
+              facetStore : <Object> null,
+              currentResults : new Array<any>()
+            };
+
+            this.settings.facetStore = {};
+            this.settings.currentResults = [];
+
+
+            $(this.settings.facetSelector).data('settings', this.settings);
+            this.initFacetCount();
+            this.filter();
+            this.order();
+            this.createFacetUI();
+            this.updateResults();
         }
 
         private log(message: string): void {
@@ -54,47 +72,47 @@ module app {
         }
 
         facetUpdate():void{
-
+          console.log('facetUpdate');
         }
 
         private initFacetCount(): void {
-            //
+          console.log('initFacetCount');
         }
 
         private resetFacetCount(): void {
-            //
+          console.log('resetFacetCount');
         }
 
         private filter(): void {
-            //
+          console.log('filter');
         }
 
         private order(): void {
-            //
+          console.log('order');
         }
 
         private toggleFilter(): void {
-            //
+          console.log('toggleFilter');
         }
 
         private createFacetUI(): void {
-            //
+          console.log('createFacetUI');
         }
 
         private getFilterById(): void {
-            //
+          console.log('getFilterById');
         }
 
         private updateFacetUI(): void {
-            //
+          console.log('updateFacetUI');
         }
 
         private updateResults(): void {
-            //
+          console.log('updateResults');
         }
 
         private showMoreResults(): void {
-            //
+          console.log('showMoreResults');
         }
 
 
