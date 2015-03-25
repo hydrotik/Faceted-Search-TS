@@ -211,6 +211,73 @@ module app {
 
         private createFacetUI(): void {
           console.log('createFacetUI');
+
+          var that = this;
+
+          var itemtemplate  = _.template(this.settings.listItemTemplate);
+          var titletemplate = _.template(this.settings.facetTitleTemplate);
+          var containertemplate = _.template(this.settings.facetContainer);
+          
+          $(this.settings.facetSelector).html('');
+          _.each(this.settings.facets, function(facettitle, facet) {
+            var facetHtml     = $(containertemplate({id: facet}));
+            var facetItem     = {title: facettitle};
+            var facetItemHtml = $(titletemplate(facetItem));
+
+            facetHtml.append(facetItemHtml);
+            var facetlist = $(this.settings.facetListContainer);
+            _.each(this.settings.facetStore[facet], function(filter:any, filtername){
+              var item:any = {id: filter.id, name: filtername, count: filter.count};
+              var filteritem  = $(itemtemplate(item));
+              if (_.indexOf(this.settings.state.filters[facet], filtername) >= 0) {
+                filteritem.addClass('activefacet');
+              }
+              facetlist.append(filteritem);
+            });
+            facetHtml.append(facetlist);
+            $(this.settings.facetSelector).append(facetHtml);
+          });
+          // add the click event handler to each facet item:
+          $('.facetitem').click(function(event){
+            var filter = getFilterById(this.id);
+            toggleFilter(filter.facetname, filter.filtername);
+            $(this.settings.facetSelector).trigger('facetedsearchfacetclick', filter);
+            order();
+            updateFacetUI();
+            updateResults();
+          });
+          // Append total result count
+          var bottom = $(this.settings.bottomContainer);
+          console.warn('facetedsearch line 242: ' + this.settings.currentResults.length);
+          //countHtml = _.template(settings.countTemplate, {count: settings.currentResults.length});
+          //$(bottom).append(countHtml);
+          // generate the "order by" options:
+          var ordertemplate = _.template(this.settings.orderByTemplate);
+          var itemHtml = $(ordertemplate({'options': this.settings.orderByOptions}));
+          $(bottom).append(itemHtml);
+          $(this.settings.facetSelector).append(bottom);
+          $('.orderbyitem').each(function(){
+            var id = this.id.substr(8);
+            if (this.settings.state.orderBy === id) {
+              $(this).addClass('activeorderby');
+            }
+          });
+          // add the click event handler to each "order by" item:
+          $('.orderbyitem').click(function(event){
+            var id = this.id.substr(8);
+            this.settings.state.orderBy = id;
+            $(this.settings.facetSelector).trigger('facetedsearchorderby', id);
+            this.settings.state.shownResults = 0;
+            order();
+            updateResults();
+          });
+          // Append deselect filters button
+          var deselect = $(this.settings.deselectTemplate).click(function(event){
+            settings.state.filters = {};
+            jQuery.facetUpdate();
+          });
+          $(bottom).append(deselect);
+          $(this.settings.facetSelector).trigger('facetuicreated');
         }
 
         private getFilterById(): void {
