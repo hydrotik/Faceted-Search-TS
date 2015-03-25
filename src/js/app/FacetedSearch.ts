@@ -321,6 +321,9 @@ module app {
 
         private updateResults(): void {
           console.log('updateResults');
+
+          $(this.settings.resultSelector).html(this.settings.currentResults.length === 0 ? this.settings.noResults : '');
+          this.showMoreResults();
         }
 
         private showMoreResults(): void {
