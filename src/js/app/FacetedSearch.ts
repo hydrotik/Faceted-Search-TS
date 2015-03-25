@@ -5,9 +5,9 @@ module app {
 
     export class FacetedSearch {
 
-        private settings:Object;
+        private settings:any;
 
-        private defaults:Object;
+        private defaults:any;
 
         private moreButton:Object;
 
@@ -47,17 +47,20 @@ module app {
               paginationCount    : 20
             }
 
-            $.extend(this.settings, this.defaults, usersettings);
+            
+
+
 
 
             this.settings = {
-              facetStore : <Object> null,
-              currentResults : new Array<any>()
-            };
+              facetStore : {},
+              currentResults : []
+            }; 
 
-            this.settings.facetStore = {};
-            this.settings.currentResults = [];
 
+            _.assign(this.settings, this.defaults, usersettings);
+
+            console.log(this.settings);
 
             $(this.settings.facetSelector).data('settings', this.settings);
             this.initFacetCount();
@@ -77,6 +80,38 @@ module app {
 
         private initFacetCount(): void {
           console.log('initFacetCount');
+
+          var that = this;
+
+          _.each(this.settings.facets, function(facettitle, facet) {
+            that.settings.facetStore[facet] = {};
+          });
+          _.each(this.settings.items, function(item) {
+           // intialize the count to be zero
+            _.each(that.settings.facets, function(facettitle, facet) {
+              if ($.isArray(item[facet])) {
+                _.each(item[facet], function(facetitem:string) {
+                  that.settings.facetStore[facet][facetitem] = that.settings.facetStore[facet][facetitem] || {count: 0, id: _.uniqueId('facet_')}
+                });
+              } else {
+                if (item[facet] !== undefined) {
+                  that.settings.facetStore[facet][item[facet]] = that.settings.facetStore[facet][item[facet]] || {count: 0, id: _.uniqueId('facet_')}
+                }
+              }
+            });
+          });
+          // sort it:
+          _.each(this.settings.facetStore, function(facet, facettitle) {
+            var sorted = _.keys(that.settings.facetStore[facettitle]).sort();
+            if (that.settings.facetSortOption && that.settings.facetSortOption[facettitle]) {
+              sorted = _.union(that.settings.facetSortOption[facettitle], sorted);
+            }
+            var sortedstore:any = {};
+            _.each(sorted, function(el) {
+              sortedstore[el] = that.settings.facetStore[facettitle][el];
+            });
+            that.settings.facetStore[facettitle] = sortedstore;
+          });
         }
 
         private resetFacetCount(): void {
