@@ -134,9 +134,9 @@ module app {
           // first apply the filters to the items
           this.settings.currentResults = _.select(this.settings.items, function(item) {
             var filtersApply = true;
-            _.each(that.settings.state.filters, function(filter, facet) {
+            _.each(that.settings.state.filters, function(filter:any, facet) {
               if ($.isArray(item[facet])) {
-                 var inters:Array = _.intersection(item[facet], filter);
+                 var inters:any = _.intersection(item[facet], filter);
                  if (inters.length === 0) {
                    filtersApply = false;
                  }
@@ -155,7 +155,7 @@ module app {
           _.each(this.settings.facets, function(facettitle, facet) {
             _.each(that.settings.currentResults, function(item) {
               if ($.isArray(item[facet])) {
-                _.each(item[facet], function(facetitem) {
+                _.each(item[facet], function(facetitem:string) {
                   that.settings.facetStore[facet][facetitem].count += 1;
                 });
               } else {
@@ -167,7 +167,7 @@ module app {
           });
           // remove confusing 0 from facets where a filter has been set
           _.each(this.settings.state.filters, function(filters, facettitle) {
-            _.each(that.settings.facetStore[facettitle], function(facet) {
+            _.each(that.settings.facetStore[facettitle], function(facet:any) {
               if (facet.count === 0 && that.settings.state.filters[facettitle].length){
                 facet.count = '+';
               }
