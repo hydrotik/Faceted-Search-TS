@@ -1,5 +1,46 @@
+/*
+Copyright (c) 2012 Eike Send, http://eike.se/nd - Original JS Version
+Copyright (c) 2015 Donovan Adams, http://www.hydrotik.com - Port to Typescript, change to lodash
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+
+
+
+
 ///<reference path="../def/jquery.d.ts" />
 ///<reference path="../def/lodash.d.ts" />
+
+
+
+/*
+  @author Eike Send, Donovan Adams
+  @description Ported over from facetedsearch [http://eikes.github.io/facetedsearch/]
+  @version  0.0.1 - Port to TS with original structure in place
+  @roadmap  convert objects to strongly typed classes
+            remove this/that and use arrow functions
+            remove/decouple lodash
+            remove/decouple jquery
+            Integrate isotope
+*/
 
 module app {
 
@@ -9,10 +50,10 @@ module app {
 
         private defaults:any;
 
-        private moreButton:Object;
+        private moreButton:any;
 
         /**
-        *   Application Facade
+        *   Faceted Search TS
         *   
         *   @param {Object} search settings
         */
@@ -47,20 +88,12 @@ module app {
               paginationCount    : 20
             }
 
-            
-
-
-
-
             this.settings = {
               facetStore : {},
               currentResults : []
             }; 
 
-
             _.assign(this.settings, this.defaults, usersettings);
-
-            console.log(this.settings);
 
             $(this.settings.facetSelector).data('settings', this.settings);
             this.initFacetCount();
@@ -86,7 +119,9 @@ module app {
           _.each(this.settings.facets, function(facettitle, facet) {
             that.settings.facetStore[facet] = {};
           });
+
           _.each(this.settings.items, function(item) {
+
            // intialize the count to be zero
             _.each(that.settings.facets, function(facettitle, facet) {
               if ($.isArray(item[facet])) {
@@ -148,9 +183,11 @@ module app {
             });
             return filtersApply;
           });
+
           // Update the count for each facet and item:
           // intialize the count to be zero
           this.resetFacetCount();
+
           // then reduce the items to get the current count for each facet
           _.each(this.settings.facets, function(facettitle, facet) {
             _.each(that.settings.currentResults, function(item) {
@@ -165,6 +202,7 @@ module app {
               }
             });
           });
+
           // remove confusing 0 from facets where a filter has been set
           _.each(this.settings.state.filters, function(filters, facettitle) {
             _.each(that.settings.facetStore[facettitle], function(facet:any) {
@@ -237,6 +275,7 @@ module app {
             facetHtml.append(facetlist);
             $(that.settings.facetSelector).append(facetHtml);
           });
+
           // add the click event handler to each facet item:
           $('.facetitem').click(function(event){
             var filter = that.getFilterById(this.id);
@@ -246,12 +285,12 @@ module app {
             that.updateFacetUI();
             that.updateResults();
           });
+
           // Append total result count
           var bottom = $(this.settings.bottomContainer);
           console.warn('facetedsearch line 242: ' + this.settings.currentResults.length);
-          //countHtml = _.template(settings.countTemplate, {count: settings.currentResults.length});
-          //$(bottom).append(countHtml);
-          // generate the "order by" options:
+
+
           var ordertemplate = _.template(this.settings.orderByTemplate);
           var itemHtml = $(ordertemplate({'options': this.settings.orderByOptions}));
           $(bottom).append(itemHtml);
@@ -314,9 +353,6 @@ module app {
               }
             });
           });
-          console.warn('facetedsearch line 307: ' + this.settings.currentResults.length);
-          //countHtml = _.template(settings.countTemplate, {count: settings.currentResults.length});
-          //$(settings.facetSelector + ' .facettotalcount').replaceWith(countHtml);
         }
 
         private updateResults(): void {
@@ -328,6 +364,36 @@ module app {
 
         private showMoreResults(): void {
           console.log('showMoreResults');
+
+          var that = this;
+
+          var showNowCount = 
+              this.settings.enablePagination ? 
+              Math.min(this.settings.currentResults.length - this.settings.state.shownResults, this.settings.paginationCount) : 
+              this.settings.currentResults.length;
+          var itemHtml = '';
+          var template = _.template(this.settings.resultTemplate);
+          for (var i = this.settings.state.shownResults; i < this.settings.state.shownResults + showNowCount; i++) {
+            var item = $.extend(this.settings.currentResults[i], {
+              totalItemNr    : i,
+              batchItemNr    : i - this.settings.state.shownResults,
+              batchItemCount : showNowCount
+            });
+            itemHtml = itemHtml + template(item);
+          }
+          $(this.settings.resultSelector).append(itemHtml);
+          if (!this.moreButton) {
+            this.moreButton = $(this.settings.showMoreTemplate).click(this.showMoreResults);
+            $(this.settings.resultSelector).after(this.moreButton);
+          }
+          if (this.settings.state.shownResults === 0) {
+            this.moreButton.show();
+          }
+          this.settings.state.shownResults += showNowCount;
+          if (this.settings.state.shownResults === this.settings.currentResults.length) {
+            $(this.moreButton).hide();
+          }
+          $(this.settings.resultSelector).trigger('facetedsearchresultupdate');
         }
 
 
