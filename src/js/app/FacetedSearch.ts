@@ -194,8 +194,19 @@ module app {
           }
         }
 
-        private toggleFilter(): void {
+        private toggleFilter(key, value): void {
           console.log('toggleFilter');
+
+          this.settings.state.filters[key] = this.settings.state.filters[key] || [] ;
+          if (_.indexOf(this.settings.state.filters[key], value) === -1) {
+            this.settings.state.filters[key].push(value);
+          } else {
+            this.settings.state.filters[key] = _.without(this.settings.state.filters[key], value);
+            if (this.settings.state.filters[key].length === 0) {
+              delete this.settings.state.filters[key];
+            }
+          }
+          this.filter();
         }
 
         private createFacetUI(): void {
