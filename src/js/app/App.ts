@@ -65,6 +65,8 @@ module app {
             // use them!
             //$.facetelize(settings);
 
+
+
             var fs:FacetedSearch = new FacetedSearch(settings);
 
         }

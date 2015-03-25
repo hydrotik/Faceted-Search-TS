@@ -297,6 +297,7 @@ interface JQueryStatic {
     */
     facetelize(settings: Object): void;
     facetUpdate():void;
+    isotope(settings: Object): void;
 }
 
 /*
@@ -705,6 +706,16 @@ interface JQuery {
     siblings(selector?: string): JQuery;
 
     slice(start: number, end?: number): JQuery;
+
+
+
+
+
+
+    /* 
+        jQuery Plugins!
+    */
+    isotope(settings: Object): void;
 }
 
 declare var jQuery: JQueryStatic;

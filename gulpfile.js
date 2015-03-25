@@ -16,7 +16,9 @@ var gulp = require('gulp'),
     merge = require('merge2'),
     tslint = require('gulp-tslint'),
     concat = require('gulp-concat'),
-    template = require('gulp-template');
+    template = require('gulp-template'),
+    compass = require('gulp-compass'),
+    path = require('path');
 
 
 // VARIABLES ======================================================
@@ -53,6 +55,16 @@ var banner = [
 gulp.task('sass', function () {
   return gulp.src(globs.sass)
     .pipe($.sass({style: 'compressed', errLogToConsole: true}))
+
+    /*
+    .pipe(compass({
+      css: 'src/tmp',
+      sass: 'src/scss',
+      image: 'src/assets/img',
+      require: ['susy']
+    }))
+    */
+
     .pipe($.autoprefixer())  // defauls to > 1%, last 2 versions, Firefox ESR, Opera 12.1
     .pipe(gulp.dest(destinations.css))
     .pipe(minifyCSS())
@@ -60,6 +72,7 @@ gulp.task('sass', function () {
     .pipe(header(banner, { package : package }))
     .pipe(gulp.dest(destinations.css))
     .pipe(browserSync.reload({stream: true}));
+
 });
 
 gulp.task('ts-lint', function () {
@@ -107,7 +120,7 @@ gulp.task('ts-compile', function () {
 });
 
 gulp.task('clean', function (cb) {
-  del(['dist/', 'build/'], cb);
+  del(['dist/', 'build/', 'src/tmp'], cb);
 });
 
 

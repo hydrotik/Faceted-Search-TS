@@ -19,11 +19,12 @@
   },
 
   "vendorjs" : [
-    {"src" : "assets/lib/modernizr/modernizr.js",             "footer" : false},
-    {"src" : "assets/lib/jquery/dist/jquery.min.js",          "footer" : true},
-    {"src" : "assets/lib/lodash/lodash.min.js",               "footer" : true},
-    {"src" : "assets/lib/facetjs/facetedsearch.js",           "footer" : true},
-    {"src" : "assets/lib/bootstrap/dist/js/bootstrap.js",     "footer" : true}
+    {"src" : "assets/lib/modernizr/modernizr.js",                   "footer" : false},
+    {"src" : "assets/lib/jquery/dist/jquery.min.js",                "footer" : true},
+    {"src" : "assets/lib/lodash/lodash.min.js",                     "footer" : true},
+    {"src" : "assets/lib/facetjs/facetedsearch.js",                 "footer" : true},
+    {"src" : "assets/lib/bootstrap/dist/js/bootstrap.js",           "footer" : true},
+    {"src" : "assets/lib/isotope/dist/isotope.pkgd.min.js",         "footer" : true}
   ],
   "vendorcss" : [
     {"src" : "assets/lib/bootstrap/dist/css/bootstrap.css"},
