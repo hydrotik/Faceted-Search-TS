@@ -116,6 +116,13 @@ module app {
 
         private resetFacetCount(): void {
           console.log('resetFacetCount');
+          var that = this;
+
+          _.each(this.settings.facetStore, function(items, facetname) {
+            _.each(items, function(value, itemname) {
+              that.settings.facetStore[facetname][itemname].count = 0;
+            });
+          });
         }
 
         private filter(): void {
