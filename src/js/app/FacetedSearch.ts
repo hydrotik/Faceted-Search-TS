@@ -225,17 +225,17 @@ module app {
             var facetItemHtml = $(titletemplate(facetItem));
 
             facetHtml.append(facetItemHtml);
-            var facetlist = $(this.settings.facetListContainer);
-            _.each(this.settings.facetStore[facet], function(filter:any, filtername){
+            var facetlist = $(that.settings.facetListContainer);
+            _.each(that.settings.facetStore[facet], function(filter:any, filtername){
               var item:any = {id: filter.id, name: filtername, count: filter.count};
               var filteritem  = $(itemtemplate(item));
-              if (_.indexOf(this.settings.state.filters[facet], filtername) >= 0) {
+              if (_.indexOf(that.settings.state.filters[facet], filtername) >= 0) {
                 filteritem.addClass('activefacet');
               }
               facetlist.append(filteritem);
             });
             facetHtml.append(facetlist);
-            $(this.settings.facetSelector).append(facetHtml);
+            $(that.settings.facetSelector).append(facetHtml);
           });
           // add the click event handler to each facet item:
           $('.facetitem').click(function(event){
@@ -298,6 +298,25 @@ module app {
 
         private updateFacetUI(): void {
           console.log('updateFacetUI');
+
+          var that = this;
+
+          var itemtemplate = _.template(this.settings.listItemTemplate);
+          _.each(this.settings.facetStore, function(facet, facetname) {
+            _.each(facet, function(filter:any, filtername){
+              var item:any = {id: filter.id, name: filtername, count: filter.count};
+              var filteritem  = $(itemtemplate(item)).html();
+              $('#'+filter.id).html(filteritem);
+              if (that.settings.state.filters[facetname] && _.indexOf(that.settings.state.filters[facetname], filtername) >= 0) {
+                $('#'+filter.id).addClass('activefacet');
+              } else {
+                $('#'+filter.id).removeClass('activefacet');
+              }
+            });
+          });
+          console.warn('facetedsearch line 307: ' + this.settings.currentResults.length);
+          //countHtml = _.template(settings.countTemplate, {count: settings.currentResults.length});
+          //$(settings.facetSelector + ' .facettotalcount').replaceWith(countHtml);
         }
 
         private updateResults(): void {
