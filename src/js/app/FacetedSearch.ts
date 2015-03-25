@@ -168,8 +168,8 @@ module app {
           // remove confusing 0 from facets where a filter has been set
           _.each(this.settings.state.filters, function(filters, facettitle) {
             _.each(that.settings.facetStore[facettitle], function(facet:any) {
-              if (facet.count === 0 && that.settings.state.filters[facettitle].length){
-                facet.count = '+';
+              if (facet['count'] === 0 && that.settings.state.filters[facettitle].length){
+                facet['count'] = '+';
               }
             });
           });
