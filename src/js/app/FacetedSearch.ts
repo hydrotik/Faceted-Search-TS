@@ -116,6 +116,7 @@ module app {
 
         private resetFacetCount(): void {
           console.log('resetFacetCount');
+
           var that = this;
 
           _.each(this.settings.facetStore, function(items, facetname) {
@@ -127,6 +128,52 @@ module app {
 
         private filter(): void {
           console.log('filter');
+
+          var that = this;
+
+          // first apply the filters to the items
+          this.settings.currentResults = _.select(this.settings.items, function(item) {
+            var filtersApply = true;
+            _.each(that.settings.state.filters, function(filter, facet) {
+              if ($.isArray(item[facet])) {
+                 var inters:Array = _.intersection(item[facet], filter);
+                 if (inters.length === 0) {
+                   filtersApply = false;
+                 }
+              } else {
+                if (filter.length && _.indexOf(filter, item[facet]) === -1) {
+                  filtersApply = false;
+                }
+              }
+            });
+            return filtersApply;
+          });
+          // Update the count for each facet and item:
+          // intialize the count to be zero
+          this.resetFacetCount();
+          // then reduce the items to get the current count for each facet
+          _.each(this.settings.facets, function(facettitle, facet) {
+            _.each(that.settings.currentResults, function(item) {
+              if ($.isArray(item[facet])) {
+                _.each(item[facet], function(facetitem) {
+                  that.settings.facetStore[facet][facetitem].count += 1;
+                });
+              } else {
+                if (item[facet] !== undefined) {
+                  that.settings.facetStore[facet][item[facet]].count += 1;
+                }
+              }
+            });
+          });
+          // remove confusing 0 from facets where a filter has been set
+          _.each(this.settings.state.filters, function(filters, facettitle) {
+            _.each(that.settings.facetStore[facettitle], function(facet) {
+              if (facet.count === 0 && that.settings.state.filters[facettitle].length){
+                facet.count = '+';
+              }
+            });
+          });
+          this.settings.state.shownResults = 0;
         }
 
         private order(): void {
