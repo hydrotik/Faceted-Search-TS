@@ -178,6 +178,20 @@ module app {
 
         private order(): void {
           console.log('order');
+
+          var that = this;
+
+          if (this.settings.state.orderBy) {
+            $('.activeorderby').removeClass('activeorderby');
+            $('#orderby_'+this.settings.state.orderBy).addClass('activeorderby');
+            this.settings.currentResults = _.sortBy(this.settings.currentResults, function(item) {
+              if (that.settings.state.orderBy === 'RANDOM') {
+                return Math.random()*10000;
+              } else {
+                return item[that.settings.state.orderBy];
+              }
+            });
+          }
         }
 
         private toggleFilter(): void {
