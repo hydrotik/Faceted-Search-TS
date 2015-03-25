@@ -239,12 +239,12 @@ module app {
           });
           // add the click event handler to each facet item:
           $('.facetitem').click(function(event){
-            var filter = getFilterById(this.id);
-            toggleFilter(filter.facetname, filter.filtername);
-            $(this.settings.facetSelector).trigger('facetedsearchfacetclick', filter);
-            order();
-            updateFacetUI();
-            updateResults();
+            var filter = that.getFilterById(this.id);
+            that.toggleFilter(filter.facetname, filter.filtername);
+            $(that.settings.facetSelector).trigger('facetedsearchfacetclick', filter);
+            that.order();
+            that.updateFacetUI();
+            that.updateResults();
           });
           // Append total result count
           var bottom = $(this.settings.bottomContainer);
@@ -258,30 +258,42 @@ module app {
           $(this.settings.facetSelector).append(bottom);
           $('.orderbyitem').each(function(){
             var id = this.id.substr(8);
-            if (this.settings.state.orderBy === id) {
+            if (that.settings.state.orderBy === id) {
               $(this).addClass('activeorderby');
             }
           });
           // add the click event handler to each "order by" item:
           $('.orderbyitem').click(function(event){
             var id = this.id.substr(8);
-            this.settings.state.orderBy = id;
-            $(this.settings.facetSelector).trigger('facetedsearchorderby', id);
-            this.settings.state.shownResults = 0;
-            order();
-            updateResults();
+            that.settings.state.orderBy = id;
+            $(that.settings.facetSelector).trigger('facetedsearchorderby', id);
+            that.settings.state.shownResults = 0;
+            that.order();
+            that.updateResults();
           });
           // Append deselect filters button
           var deselect = $(this.settings.deselectTemplate).click(function(event){
-            settings.state.filters = {};
-            jQuery.facetUpdate();
+            that.settings.state.filters = {};
+            that.facetUpdate();
           });
           $(bottom).append(deselect);
           $(this.settings.facetSelector).trigger('facetuicreated');
         }
 
-        private getFilterById(): void {
+        private getFilterById(id:string): any {
           console.log('getFilterById');
+
+          var that = this;
+
+          var result:any = false;
+          _.each(this.settings.facetStore, function(facet, facetname) {
+            _.each(facet, function(filter:any, filtername){
+              if (filter.id === id) {
+                result =  {'facetname': facetname, 'filtername': filtername};
+              }
+            });
+          });
+          return result;
         }
 
         private updateFacetUI(): void {
