@@ -28,6 +28,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ///<reference path="../def/jquery.d.ts" />
 ///<reference path="../def/lodash.d.ts" />
+///<reference path="../def/TweenLite.d.ts" />
 
 
 
@@ -360,6 +361,17 @@ module app {
 
           $(this.settings.resultSelector).html(this.settings.currentResults.length === 0 ? this.settings.noResults : '');
           this.showMoreResults();
+
+          $('.item').each(function(i, item){
+            var $item = $(item);
+            /*
+            $item.addClass('hide').delay(i * 300).queue(function(next){
+                $(this).removeClass('hide');
+                next();
+            });
+            */
+            TweenLite.to($item, .2, {opacity : 1, delay: i * 0.1 });
+          });
         }
 
         private showMoreResults(): void {

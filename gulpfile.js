@@ -54,16 +54,16 @@ var banner = [
 
 gulp.task('sass', function () {
   return gulp.src(globs.sass)
-    .pipe($.sass({style: 'compressed', errLogToConsole: true}))
+    //.pipe($.sass({style: 'compressed', errLogToConsole: true}))
 
-    /*
+    
     .pipe(compass({
       css: 'src/tmp',
       sass: 'src/scss',
       image: 'src/assets/img',
       require: ['susy']
     }))
-    */
+    
 
     .pipe($.autoprefixer())  // defauls to > 1%, last 2 versions, Firefox ESR, Opera 12.1
     .pipe(gulp.dest(destinations.css))
@@ -143,17 +143,6 @@ gulp.task('copy-assets', function () {
 
 gulp.task('index', function () {
   var target = gulp.src(globs.index);
-  /*var _injectPaths = isDist ? injectPaths.dist : injectPaths.dev;
-
-  return target.pipe(
-    $.inject(gulp.src(_injectPaths, {read: false}), {
-      ignorePath: outputFolder,
-      addRootSlash: false
-    })
-  ).pipe(gulp.dest(destinations.index));
-*/
-
-
     return target.pipe(template({
           footerjs : config.vendorjs,
           headercss : config.vendorcss

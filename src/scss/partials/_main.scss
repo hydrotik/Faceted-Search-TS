@@ -1,57 +1,86 @@
-.main {
+@import "compass/utilities/general/clearfix";
+@import "compass/utilities/general/float";
+@import "compass/css3/transition";
+@import "compass/css3/opacity";
 
-	.facetsearch {
+.main {
+    @include container;
+
+    .item {
+        width: 170px;
+        height: 270px;
+        padding : 10px;
+        margin: 0 10px 10px 0;
+        float: left;
+        //@include transition(all 0.3s ease-in-out);
+        @include transparent;
+        &:last-child {
+            @include clearfix;
+            @include reset-float;
+            clear: both;
+        }
+        /*
+        &:hover {
+            background-color: #CCCCCC;
+        }
+        */
+    }
+
+    /*
+    .show{
+      @include opaque;
+    }
+    */
+
+
+
+
+    .facetsearch {
         display: inline-block;
         width: 200px;
         vertical-align: top;
-      }
-      .activeorderby,
-      .activefacet {
+    }
+    .activeorderby,
+    .activefacet {
         color: red;
-      }
-      .bottomline {
+    }
+    .bottomline {
         padding: 10px 0 10px 0;
         font-weight: bold;
-      }
-      .bottomline .orderby, 
-      .bottomline .facettotalcount {
+    }
+    .bottomline .orderby,
+    .bottomline .facettotalcount {
         display: inline-block;
-      }
-      .bottomline .orderby ul,
-      .bottomline .orderby li {
+    }
+    .bottomline .orderby ul,
+    .bottomline .orderby li {
         display: inline;
         padding: 0;
-      }
-      .bottomline .orderby-title {
+    }
+    .bottomline .orderby-title {
         margin: 0 0 0 10px;
-      }
-      .bottomline .deselectstartover {
+    }
+    .bottomline .deselectstartover {
         float: right;
-      }
-      #language {
+    }
+    #language {
         width: 400px;
-      }
-      #language .facetlist{
+    }
+    #language .facetlist {
         column-count: 2;
         -webkit-column-count: 2;
         -moz-column-count: 2;
         -o-column-count: 2;
-      }
-      .item {
-        width: 150px;
-        height: 250px;
-        margin: 0 10px 10px 0;
-        display: inline-block;
-        vertical-align: top;
-      }
-      .item h4 {
+    }
+    
+    .item h4 {
         font-size: 1.2em;
-      }
-      .item .tags {
+    }
+    .item .tags {
         font-weight: bold;
         color: gray;
-      }
-      #showmorebutton {
+    }
+    #showmorebutton {
         border: 1px solid #AAA;
         border-radius: 15px;
         background-color: #DDD;
@@ -61,21 +90,20 @@
         display: block;
         text-align: center;
         cursor: pointer;
-      }
-      
-      #wrapper, #documentation {
+    }
+    #wrapper, #documentation {
         margin: 0 auto;
         width: 800px;
-      }
-      p {
+    }
+    p {
         padding-bottom: 1em;
         line-height: 1.3em;
-      }
-      h1, h2, h3{
+    }
+    h1, h2, h3 {
         margin: 0 0 1em 0;
-      }
-      tt {
+    }
+    tt {
         background-color: #EEE;
         border: 1px solid #CCC;
-      }
+    }
 }

@@ -10,6 +10,7 @@
     "modernizr": "~2.8.3",
     "facetjs": "https://github.com/eikes/facetedsearch.git",
     "bootstrap": "~3.3.4",
-    "isotope": "~2.1.1"
+    "isotope": "~2.1.1",
+    "gsap": "~1.16.1"
   }
 }

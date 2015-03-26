@@ -35,7 +35,7 @@ module app {
 
 
               var item_template = 
-               '<div class="item">' +
+               '<div class="item" id="<%= obj.objectid %>">' +
                  '<img src="<%= obj.imageURL %>">' +
                  '<h4><%= obj.lastname %>, <%= obj.firstname %></h4>' + 
                  '<p class="tags">' + 
